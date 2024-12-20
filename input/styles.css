@@ -75,11 +75,6 @@ html, body {
     overflow-wrap: break-word;
 }
 
-.block5 p {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
 .block5 {
     grid-area: block5;
     background-image: url('https://github.com/VadimGrabenko/Web_1/blob/main/images/pexels-lina-1741205.jpg?raw=true');
@@ -87,13 +82,18 @@ html, body {
     background-position: center;
     background-color: #FFFFFF;
     text-align: left;
-    display: flex;
     padding: 20px;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     word-wrap: break-word;
     color: white;
+}
+
+.block5 p {
+    margin-bottom: 15px;
+    text-align: left;
 }
 
 .block5 ul {

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Layout Task</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="block block1"><h1>INPUT MAIN PAGE</h1></div>
+    <div class="block block2"><p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p></div>
+    <div class="block block3"><p>Et harum quidem rerugm facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus</p></div>
+    <div class="block block4"><p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."</p></div>
+
+    <div class="block block5">
+        <h2>Створення Toast об'єктів</h2>
+        <div id="formContainer">
+            <label>Введіть контент:</label>
+            <label for="toastInput"></label><input type="text" id="toastInput" />
+            <button onclick="saveToast()">Save</button>
+        </div>
+        <script>
+            async function saveToast() {
+                const input = document.getElementById("toastInput").value;
+
+                if (!input) {
+                    alert("Поле не повинно бути порожнім!");
+                    return;
+                }
+
+                try {
+                    const response = await fetch('https://web6backend20-production.up.railway.app/toasts', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ content: input })
+                    });
+
+                    if (response.ok) {
+                        alert("Toast збережено успішно!");
+                    } else {
+                        const errorText = await response.text();
+                        alert(`Помилка збереження: ${errorText}`);
+                    }
+                } catch (error) {
+                    alert(`Виникла помилка: ${error.message}`);
+                }
+            }
+        </script>
+    </div>
+
+    <div class="block block6"><p>earum rerum hic tenetur a sapiente delectus</p></div>
+    <div class="block block7"><h2>IT'S ENDING OF THIS LAB</h2></div>
+</div>
+</body>
+</html>

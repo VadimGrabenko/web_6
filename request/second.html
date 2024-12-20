@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Layout Task</title>
+    <link rel="stylesheet" href="../input/styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="block block1"><h1>REQUEST MAIN PAGE</h1></div>
+    <div class="block block2"><p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p></div>
+    <div class="block block3"><p>Et harum quidem rerugm facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus</p></div>
+    <div class="block block4"><p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."</p></div>
+
+    <div class="block block5">
+        <h2>Список Toast об'єктів</h2>
+        <div id="toastContainer"></div>
+
+        <div class="form-buttons">
+            <label for="toastId">Toast ID:</label>
+            <input type="text" id="toastId" placeholder="Введіть ID">
+            <button onclick="fetchToastById()">Отримати тост за ID</button>
+            <button onclick="fetchToasts()">Отримати всі тости</button>
+            <button onclick="deleteToastById()">Видалити тост за ID</button>
+        </div>
+
+        <script>
+            const BASE_URL = 'https://web6backend20-production.up.railway.app/toasts';
+
+            async function fetchToasts() {
+                try {
+                    const response = await fetch(BASE_URL);
+                    if (!response.ok) {
+                        throw new Error('Помилка при отриманні тостів');
+                    }
+                    const toasts = await response.json();
+
+                    const container = document.getElementById("toastContainer");
+                    container.innerHTML = "";
+
+                    toasts.forEach(content => {
+                        const toast = document.createElement("div");
+                        toast.textContent = content;
+                        toast.style.cssText = "padding: 10px; margin: 5px; background: lightgray; border: 1px solid black;";
+                        container.appendChild(toast);
+                    });
+                } catch (error) {
+                    alert(`Помилка: ${error.message}`);
+                }
+            }
+
+            async function fetchToastById() {
+                const id = document.getElementById("toastId").value.trim();
+                if (!id) {
+                    alert("Введіть ID");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${BASE_URL}/${id}`);
+                    if (!response.ok) {
+                        throw new Error('Тост із таким ID не знайдено');
+                    }
+                    const toast = await response.json();
+                    alert(`Toast: ${JSON.stringify(toast)}`);
+                } catch (error) {
+                    alert(`Помилка: ${error.message}`);
+                }
+            }
+
+            async function deleteToastById() {
+                const id = document.getElementById("toastId").value.trim();
+                if (!id) {
+                    alert("Введіть ID");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
+                    if (response.ok) {
+                        alert("Тост видалено успішно");
+                        await fetchToasts();
+                    } else {
+                        throw new Error('Помилка при видаленні');
+                    }
+                } catch (error) {
+                    alert(`Помилка: ${error.message}`);
+                }
+            }
+
+            setInterval(fetchToasts, 5000);
+            fetchToasts();
+        </script>
+    </div>
+
+    <div class="block block6"><p>earum rerum hic tenetur a sapiente delectus</p></div>
+    <div class="block block7"><h2>IT'S ENDING OF THIS LAB</h2></div>
+</div>
+</body>
+</html>
