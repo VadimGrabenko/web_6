@@ -22,7 +22,7 @@
         </div>
         <script>
             async function saveToast() {
-                const input = document.getElementById("toastInput").value;
+                const input = document.getElementById("toastInput").value.trim();
 
                 if (!input) {
                     alert("Поле не повинно бути порожнім!");
@@ -30,14 +30,24 @@
                 }
 
                 try {
-                    const response = await fetch('https://web6backend20-production.up.railway.app/toasts', {
+                    const checkResponse = await fetch('http://localhost:8080/toasts');
+                    if (!checkResponse.ok) {
+                        alert(`Помилка перевірки тостів: ${await checkResponse.text()}`);
+                        return;
+                    }
+                    const existingToasts = await checkResponse.json();
+
+                    const id = existingToasts.length === 0 ? 1 : undefined;
+
+                    const response = await fetch('http://localhost:8080/toasts', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ content: input })
+                        body: JSON.stringify({ id, text: input })
                     });
 
                     if (response.ok) {
-                        alert("Toast збережено успішно!");
+                        const createdToast = await response.json();
+                        alert(`Toast створено успішно: ID=${createdToast.id}, Text="${createdToast.text}"`);
                     } else {
                         const errorText = await response.text();
                         alert(`Помилка збереження: ${errorText}`);
@@ -47,6 +57,7 @@
                 }
             }
         </script>
+        <p><a href="../request/second.html">Request page</a></p>
     </div>
 
     <div class="block block6"><p>earum rerum hic tenetur a sapiente delectus</p></div>
