@@ -26,7 +26,7 @@
         </div>
 
         <script>
-            const BASE_URL = 'https://web6backend20-production.up.railway.app/toasts';
+            const BASE_URL = 'http://localhost:8080/toasts';
 
             async function fetchToasts() {
                 try {
@@ -41,15 +41,14 @@
 
                     toasts.forEach(content => {
                         const toast = document.createElement("div");
-                        toast.textContent = content;
-                        toast.style.cssText = "padding: 10px; margin: 5px; background: lightgray; border: 1px solid black;";
+                        toast.className = "toast-block"; // Додаємо клас для стилізації
+                        toast.textContent = `ID: ${content.id}, Text: ${content.text || "Порожній текст"}`;
                         container.appendChild(toast);
                     });
                 } catch (error) {
                     alert(`Помилка: ${error.message}`);
                 }
             }
-
             async function fetchToastById() {
                 const id = document.getElementById("toastId").value.trim();
                 if (!id) {
@@ -92,6 +91,7 @@
             setInterval(fetchToasts, 5000);
             fetchToasts();
         </script>
+        <p><a href="../input/first.html">Input page</a></p>
     </div>
 
     <div class="block block6"><p>earum rerum hic tenetur a sapiente delectus</p></div>
