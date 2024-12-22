@@ -1,3 +1,3 @@
 ## 8 Варіант лаби
 ## Посилання на сайт:
-https://github.com/VadimGrabenko/web_6
+https://vadimgrabenko.github.io/web_6/
